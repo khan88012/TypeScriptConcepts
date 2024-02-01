@@ -1,0 +1,101 @@
+student
+
+id      name  
+-----------------------------------  
+1	kav
+2 	maf
+3 	floof
+
+marks
+
+id 	studentid	subject 	marks
+---------------------------------------------------
+1	1		maths		70
+2	1		science		80
+3	1		english		60
+4	2		maths		50
+5	2		science		40
+6	2		english		30
+7	3		maths		90
+8	3		science		91
+9	3		english		92
+
+
+o/p
+
+name	totalmarks
+--------------------------
+kav	210
+maf	120
+floof	273
+
+
+compiled code
+
+  interface Student {
+    id: number;
+    name: string;
+}
+
+interface Mark {
+    id: number;
+    studentId: number;
+    subject: string;
+    marks: number;
+}
+// Example data
+const students: Student[] = [
+    { id: 1, name: 'kav' },
+    { id: 2, name: 'maf' },
+    { id: 3, name: 'floof' }
+];
+
+const marks: Mark[] = [
+    { id: 1, studentId: 1, subject: 'maths', marks: 70 },
+    { id: 2, studentId: 1, subject: 'science', marks: 80 },
+    { id: 3, studentId: 1, subject: 'english', marks: 60 },
+    { id: 4, studentId: 2, subject: 'science', marks: 50 },
+    { id: 5, studentId: 2, subject: 'maths', marks: 40 },
+    { id: 6, studentId: 2, subject: 'english', marks: 30 },
+    { id: 7, studentId: 3, subject: 'maths', marks: 90 },
+    { id: 8, studentId: 3, subject: 'science', marks: 91 },
+    { id: 9, studentId: 3, subject: 'english', marks: 92 }
+    
+    // ... other marks
+];
+
+// Calculate total marks
+const totalMarks = calculateTotalMarks(students, marks);
+
+// Display output
+function calculateTotalMarks(students: Student[], marks: Mark[]): { name: string, totalMarks: number }[] {
+    const totalMarks = students.map(student => {
+        const studentMarks = marks
+            .filter(mark => mark.studentId === student.id)
+            .reduce((acc, curr) => acc + curr.marks, 0);
+        return {
+            name: student.name,
+            totalMarks: studentMarks
+        };
+    });
+
+    return totalMarks;
+}
+
+console.log(totalMarks);
+
+
+o/p
+
+[LOG]: [{
+  "name": "kav",
+  "totalMarks": 210
+}, {
+  "name": "maf",
+  "totalMarks": 120
+}, {
+  "name": "floof",
+  "totalMarks": 273
+}] 
+
+	
