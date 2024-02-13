@@ -12,9 +12,10 @@ var arr = [2,5,6,3,8,9];
 //function(val, index) is called for each value of arr and the index is the index of each value
 var newArr = arr.map(function(val, index){
     console.log("key:", index, "value:", val*val)
+    return val*val; // puts the result in newArr
 })
 
-console.log("the new array returned by mapping", newArr[0]);// producing undefined result , fix it
+console.log("the new array returned by mapping", newArr);
 
 //------------------------------------------------------------------------------------------------------------------------------------
 interface Student {
@@ -50,15 +51,31 @@ const marks: Mark[] = [
 ];
 
 //write instructions to get the name of the students and the different subjects they are studying
-let individualSubjects : Mark[];
+let individualStudentData : Mark[];
 
 let a : any;
 let b: string[]=[];
 const studentAndTheirSubjects = findSubjects(students, marks);
 function findSubjects(students: Student[], marks: Mark[]): {name:string, totalSubs: string[]}[] {
       students.map( stdnt => {
-         individualSubjects = marks.filter(mark =>mark.studentId === stdnt.id);
-    
+         individualStudentData = marks.filter(mark =>mark.studentId === stdnt.id);
+
+         console.log("individualSubjects", individualStudentData);
+
+      
+       var studentWithThereTotalMarks=  students.map(
+            student =>{
+                var totalindividualMarks = marks.filter(mark => mark.studentId === student.id).reduce(
+                    (a,b)=>
+                         a + b.marks ,0                      
+                    
+                )
+               return new Object({name : student.name, totalSubs : totalindividualMarks});
+            }
+
+         );
+
+            console.log("studentWithThereTotalMarks",studentWithThereTotalMarks);
         
         //  individualSubjects.forEach(iS=>{
         //     b.push(iS.subject);
